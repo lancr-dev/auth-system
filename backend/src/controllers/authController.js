@@ -134,3 +134,16 @@ export const login = async (req, res) => {
     });
   }
 };
+
+export const logout = (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+  });
+
+  return res.status(200).json({
+    success: true,
+    message: 'Logout successful',
+  });
+};
