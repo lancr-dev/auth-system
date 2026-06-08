@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5002;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse form data sent | Read form submissions (e.g., login/register forms)
-app.use(cookieParser()); // Parse cookies and make them available in req.cookies | // Read authentication cookies (e.g., JWT token)
+app.use(cookieParser()); // Parse cookies and make them available in req.cookies | Read authentication cookies (e.g., JWT token)
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -30,7 +30,6 @@ app.use(
   }),
 );
 
-// Test route
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
@@ -38,7 +37,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

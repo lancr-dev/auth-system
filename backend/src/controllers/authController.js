@@ -35,7 +35,8 @@ export const register = async (req, res) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Create user
     const user = await User.create({
@@ -112,9 +113,9 @@ export const login = async (req, res) => {
     // Set HTTP-only cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false,
+      secure: false, // in production, this should be true
       sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, // how long the cookie lasts | expires in 1 day
     });
 
     return res.status(200).json({
