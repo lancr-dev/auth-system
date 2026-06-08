@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: true })); // Parse form data sent | Read 
 app.use(cookieParser()); // Parse cookies and make them available in req.cookies | // Read authentication cookies (e.g., JWT token)
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(
   cors({
