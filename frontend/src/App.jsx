@@ -5,20 +5,80 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
+import ChangePassword from './pages/ChangePassword';
+
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
+import AdminRoute from './components/AdminRoute';
+
+import useAuth from './hooks/useAuth';
 
 function App() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login />} />
+        {/* Public Routes */}
+        <Route
+          path='/'
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
 
-        <Route path='/register' element={<Register />} />
+        <Route
+          path='/register'
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
 
-        <Route path='/dashboard' element={<Dashboard />} />
+        {/* Private Routes */}
+        <Route
+          path='/dashboard'
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path='/profile' element={<Profile />} />
+        <Route
+          path='/profile'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path='/admin' element={<AdminDashboard />} />
+        <Route
+          path='/change-password'
+          element={
+            <PrivateRoute>
+              <ChangePassword />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Admin Route */}
+        <Route
+          path='/admin'
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

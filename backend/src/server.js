@@ -15,6 +15,13 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5002;
 
+app.use(
+  cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // Parse form data sent | Read form submissions (e.g., login/register forms)
 app.use(cookieParser()); // Parse cookies and make them available in req.cookies | Read authentication cookies (e.g., JWT token)
@@ -22,13 +29,6 @@ app.use(cookieParser()); // Parse cookies and make them available in req.cookies
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
-
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-  }),
-);
 
 app.get('/', (req, res) => {
   res.status(200).json({
